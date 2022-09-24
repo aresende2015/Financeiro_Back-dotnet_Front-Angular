@@ -1,0 +1,16 @@
+using System;
+using System.Threading.Tasks;
+using InvestQ.Data.Paginacao;
+using InvestQ.Domain.Entities.Clientes;
+
+namespace InvestQ.Data.Interfaces.Clientes
+{
+    public interface IClienteRepo : IGeralRepo
+    {
+        Task<Cliente[]> GetAllClientesUserAsync(int userId, bool includeCarteira);
+        Task<PageList<Cliente>> GetAllClientesAsync(int userId, PageParams pageParams, bool includeCarteira);  
+        Task<PageList<Cliente>> GetAllClientesByCorretoraId(int userId, PageParams pageParams, Guid corretoraId, bool includeCorretora);      
+        Task<Cliente> GetClienteByIdAsync(int userId, Guid id, bool includeCorretora);
+        Task<Cliente> GetClienteByCpfAsync(int userId, string cpf, bool includeCorretora);
+    }
+}

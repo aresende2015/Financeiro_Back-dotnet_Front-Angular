@@ -1,0 +1,50 @@
+<div class="card rounded shadow-sm p-3">
+  <app-filtrar
+    [filtro]="false"
+    [rotaLink]="'/taxasdenegociacoes/detalhe'">
+  </app-filtrar>
+  <br>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Tipo de Ativo</th>
+        <th>Percentual(%)</th>
+        <th>Data início</th>
+        <th>Data fim</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="taxasDeNegociacoes && taxasDeNegociacoes.length">
+      <tr *ngFor="let taxaDeNegociacao of taxasDeNegociacoes" >
+        <td></td>
+        <td>{{ pegaTipoDeAtivo(taxaDeNegociacao.tipoDeAtivo) }}</td>
+        <td>{{ taxaDeNegociacao.percentual | currency:'BRL':'':'1.4-4' }}</td>
+        <td>{{ taxaDeNegociacao.dataInicio | DateFormatPipe }}</td>
+        <td>{{ taxaDeNegociacao.dataFim | DateFormatPipe }}</td>
+        <td>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, taxaDeNegociacao.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!taxasDeNegociacoes.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum Provento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar a Taxa de Negociação {{this.taxaDeNegociacaoId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+
+

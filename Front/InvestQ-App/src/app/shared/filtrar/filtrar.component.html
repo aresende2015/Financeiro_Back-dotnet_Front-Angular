@@ -1,0 +1,32 @@
+
+<!-- ### Colocar no HTLM pai do componente
+<app-filtrar
+    [rotaLink]="'/clientes/detalhe'"
+    [botaoNovo]="true"
+    (filtroAcionado)="onFiltroAcionado($event)">
+</app-filtrar> -->
+<div class="d-flex">
+  <div class="flex-fill pe-3">
+    <div class="input-group mb-2" *ngIf="filtro">
+      <div class="input-group-prepend">
+        <div class="input-group-text">Filtro: </div>
+      </div>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="{{ placerHolder }}"
+        (input)="filtrar($event.target)"
+      >
+    </div>
+  </div>
+  <div  *ngIf="botaoNovo">
+    <!-- <a class="d-flex btn btn-outline-primary" routerLink="get()">
+      <i class="fa fa-plus-circle my-1"></i>
+      <b class="ms-1 d-none d-sm-block">Novo</b>
+    </a> -->
+    <button class="d-flex btn btn-outline-primary" (click)="novo()">
+      <i class="fa fa-plus-circle my-1"></i>
+      <b class="ms-1 d-none d-sm-block">Novo</b>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,191 @@
+Pré-requisitos
+Instalar dotnet core 5 ==> https://dotnet.microsoft.com/en-us/download
+Instalar Node ==> https://nodejs.org/en/
+Instalar Postman ==> https://www.postman.com/downloads/
+
+
+dotnet --version
+dotnet --list-sdks
+node --version
+npm --version
+
+=====================
+
+
+- Criar o globaljason do projeto
+dotnet new globaljson --sdk-version 3.1.416
+
+- Criar um projeto web api
+dotnet new webapi -n InvestQ.API
+
+- Criar um projeto de dominio
+dotnet new classlib -n InvestQ.Domain
+
+- Criar um projeto de dados(Repositórios)
+dotnet new classlib -n InvestQ.Data
+
+- Criar um projeto de aplicação()
+dotnet new classlib -n InvestQ.Application
+
+- Criar uma solução do projeto
+dotnet new sln -n InvestQ
+
+- Adicionar os projetos para dentro da solução
+dotnet sln InvestQ.sln add InvestQ.API
+dotnet sln InvestQ.sln add InvestQ.Domain
+dotnet sln InvestQ.sln add InvestQ.Data
+dotnet sln InvestQ.sln add InvestQ.Application
+
+- Para dar um builder na solução, tem que estar na pasta da solução
+dotnet restore
+
+- Adicionar referências dos projetos
+dotnet add InvestQ.API reference InvestQ.Application
+dotnet add InvestQ.Application reference InvestQ.Domain
+dotnet add InvestQ.Application reference InvestQ.Data
+dotnet add InvestQ.Data reference InvestQ.Domain
+
+
+- Rodar um projeto e ficar escutando
+dotnet watch run -p InvestQ.API
+
+- Rodar um projeto normal
+dotnet run -p InvestQ.API
+
+- Instalar dotnet EF
+dotnet tool install --global dotnet-EF
+
+- Para instalar alguns pacotes no projeto, direto no csproj
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+- Instalar no projeto o EF Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+
+
+- Para criar nossas migrations do EntityFrameworkCore, rodar dentro da pasta da solução
+dotnet ef migrations add inicial -p InvestQ.Data -s InvestQ.API 
+
+- PaRA criar o banco de dados referente a migration, rodar dentro da pasta da solução
+dotnet ef database update -s InvestQ.API
+dotnet ef database drop.
+
+-- Instalar o Dapper -- rodar dentro do projeto destino
+dotnet add package Dapper
+
+
+=======================================================
+Comandos do Angular
+- Esse comando altera a politica de execução do powershell para o angular
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted 
+
+- Retorna a politica anterior do computador
+Set-ExecutionPolicy -ExecutionPolicy AllSigned 
+
+- Instalar o Angular
+npm install -g @angular/cli
+ng --version
+
+- Para criar um projeto, entre na pasta desejada
+ng new my-App
+
+- Para rodar a aplicação
+ng serve -o     ou  (npm start)
+
+
+- Instalar o fortawesome
+npm install --save @fortawesome/fontawesome-free
+
+- Instalar ngx-bootstrap
+npm install ngx-bootstrap --save
+
+- Instalar o bootstrap
+npm install bootstrap@5
+
+- Adicionar o ngx-bootstrap
+ng add ngx-bootstrap
+
+- Instalar o ngx-toastr
+npm install ngx-toastr --save
+
+- Instalar o ngx-spinner
+npm install ngx-spinner --save
+
+- Instalar o Bootsnipp
+
+- Instalar o Bootswatch
+npm install bootswatch
+
+- Instalar currency
+npm i ngx-currency
+.
+.
+
+- Criar componentes no Angular via CLI (usuários)
+- Irá criar um componente dentro da pasta components e referenciar no modulo app
+ng g c components/user --module app
+ng g c components/user/login --module app
+ng g c components/user/registration --module app
+
+
+
+=======================================================
+
+
+Instalando o Identity
+
+Usar o NuGet Gallery ==> Microsoft.AspNetCore.Identity para EntityFrameworkCore
+Instalar primeiramente no projeto de dominios.
+
+
+===========================
+Criando um interceptor no front
+
+ng g interceptor interceptors/jwt
+
+============================
+
+Criando um Guard
+
+ng g guard guard/auth
+
+===============
+Usar Guid no Angular
+
+npm i guid-typescript --save
+
+=====================
+slq server
+Server=localhost;Database=master;Trusted_Connection=True;
+
+sa - 12345678
+
+aresende - Teste@123
+
+-------------------------------------
+
+Fazer o build no Angular - dentro da pasta do projeto
+
+ng build --target=development --environment=development
+ng build --dev --e=dev
+ng build --dev
+ng build
+ng build --target=production --environment=prod
+ng build --prod --e=prod
+ng build --prod
+
+-----------------------------
+Instalando o http-server para testar deploy
+npm install --global http-server
+
+
+
+
+
+
+

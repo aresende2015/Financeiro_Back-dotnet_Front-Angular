@@ -1,0 +1,71 @@
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <p>Form value: {{form.value | json}}</p>
+    <p>Form value: {{form.status | json}}</p>
+    <div class="p-3">
+      <div class="row">
+        <div class="form-group col-md-3" [ngClass]="cssValidator(f.tipoDeAtivo)">
+          <label class="control-label">Tipo de Ativo</label>
+          <select class="form-control" id="tipoDeAtivo" formControlName="tipoDeAtivo">
+            <option *ngFor="let item of tipoDeAtivoOp" [value]="item.valor">{{ item.desc }}</option>
+          </select>
+          <div *ngIf="f.tipoDeAtivo.errors?.required" class="invalid-feedback">
+            Tipo de Movimentação é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Data Início</label>
+          <input
+            type="datetime" class="form-control"
+            [ngClass]="cssValidator(f.dataInicio)"
+            value="{{taxaDeIR.dataInicio | DateFormatPipe }}"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataInicio"
+            placeholder=""
+          >
+          <div *ngIf="f.dataInicio.errors?.required" class="invalid-feedback">
+            Data Início é obrigatório.
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Data Fim</label>
+          <input
+            type="datetime" class="form-control"
+            [ngClass]="cssValidator(f.dataFim)"
+            value="{{taxaDeIR.dataFim | DateFormatPipe }}"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataFim"
+            placeholder=""
+          >
+        </div>
+        <div class="form-group col-md-3">
+          <label>Percentual</label>
+          <input
+            type="text"
+            currencyMask
+            [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left', precision: 4 }"
+            [ngClass]="cssValidator(f.percentual)"
+            class="form-control"
+            formControlName="percentual"
+            placeholder=""
+          >
+          <div *ngIf="f.percentual.errors?.required" class="invalid-feedback">
+            Percentual é obrigatório.
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <app-salvar
+        [botaoSalvar]="'TaxaDeIR'"
+        [formValido]="form.valid"
+        (clicouEm)="onClicouEm($event)">
+    </app-salvar>
+    <!-- <app-form-debug [form]="form"></app-form-debug> -->
+  </form>
+</div>
+
+

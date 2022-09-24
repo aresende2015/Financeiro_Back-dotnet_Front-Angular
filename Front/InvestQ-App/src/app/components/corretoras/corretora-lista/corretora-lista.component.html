@@ -1,0 +1,64 @@
+<div class="card rounded shadow-sm p-3">
+  <app-filtrar
+    [rotaLink]="'/corretoras/detalhe'"
+    (filtroAcionado)="onFiltroAcionado($event)">
+  </app-filtrar>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>
+          <button class="btn btn-outline-light btn-sm" (click)="mostrarOcultarImagen()">
+            <i class="{{!mostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+            {{!mostrarImagem ? 'Exibir' : 'Ocultar'}}
+          </button>
+        </th>
+        <th>#</th>
+        <th>Descrição</th>
+        <th>Cliente</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="corretoras && corretoras.length">
+      <tr *ngFor="let corretora of corretorasFiltradas" >
+        <td>
+          <img [collapse]="!mostrarImagem"
+              [isAnimated]="true"
+              [src]="mostraImagem(corretora.imagen)"
+              [style.width.px]="largudaImagem"
+              [style.margin.px]="margemImagem"
+          >
+        </td>
+        <td>{{corretora.id}}</td>
+        <td>{{corretora.descricao | uppercase}}</td>
+        <td>
+          <ul>
+            <!-- <li *ngFor="let carteira of corretora.carteiras">{{carteira.cliente?.nomeCompleto | uppercase}}</li> -->
+          </ul>
+        </td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-md-2" tooltip="Editar" (click)="detalheCorretora(corretora.id)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" tooltip="Excluir" (click)="openModal($event, template, corretora.id)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!corretoras.length">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum evento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer deletar a corretora de código {{this.corretoraId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
