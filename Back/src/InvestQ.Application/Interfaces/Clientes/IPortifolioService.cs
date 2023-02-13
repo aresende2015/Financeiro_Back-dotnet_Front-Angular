@@ -16,5 +16,6 @@ namespace InvestQ.Application.Interfaces.Clientes
         Task<PortifolioDto[]> GetAllPortifoliosByCarteiraIdAsync(Guid carteiraId);
         Task<PortifolioDto[]> GetAllPortifoliosByCarteiraIdTipoDeAtivoAsync(Guid carteiraId, TipoDeAtivoDto tipoDeAtivo);
         Task<PortifolioDto> GetPortifolioByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId);
+        bool GetPossuiQuantidadeDeAtivoByCarteiraId(Guid carteiraId, Guid ativoId, decimal quantidade);
     }
 }

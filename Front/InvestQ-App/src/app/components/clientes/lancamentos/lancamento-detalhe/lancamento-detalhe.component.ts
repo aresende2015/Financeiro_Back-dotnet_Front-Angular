@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Ativo } from '@app/models/Ativo';
-import { Carteira } from '@app/models/Carteira';
-import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
-import { Lancamento } from '@app/models/Lancamento';
-import { AtivoService } from '@app/services/ativos/ativo.service';
-import { CarteiraService } from '@app/services/clientes/carteira.service';
-import { LancamentoService } from '@app/services/clientes/lancamento.service';
+
 import { Guid } from 'guid-typescript';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
+import { Ativo } from '@app/models/Ativo';
+import { Carteira } from '@app/models/Carteira';
+import { TipoDeAtivo } from '@app/models/Enum/TipoDeAtivo.enum';
+import { Lancamento } from '@app/models/Lancamento';
+
+import { AtivoService } from '@app/services/ativos/ativo.service';
+import { CarteiraService } from '@app/services/clientes/carteira.service';
+import { LancamentoService } from '@app/services/clientes/lancamento.service';
+import { PortifolioService } from '@app/services/clientes/portifolio.service';
+
+import { TipoDeMovimentacao } from '@app/models/Enum/TipoDeMovimentacao.enum';
 @Component({
   selector: 'app-lancamento-detalhe',
   templateUrl: './lancamento-detalhe.component.html',
@@ -27,6 +32,7 @@ export class LancamentoDetalheComponent implements OnInit {
   public carteiraId: Guid;
 
   lancamentoId: Guid;
+  PossuiQuantidadeDeAtivo: boolean = false;
   form!: FormGroup;
 
   tipoDeMovimentacaoOp: any[];
@@ -56,6 +62,7 @@ export class LancamentoDetalheComponent implements OnInit {
               private activatedRouter: ActivatedRoute,
               private localeService: BsLocaleService,
               private lancamentoService: LancamentoService,
+              private portifolioService: PortifolioService,
               private ativoService: AtivoService,
               private carteiraService: CarteiraService,
               private spinner: NgxSpinnerService,
@@ -192,24 +199,46 @@ export class LancamentoDetalheComponent implements OnInit {
           this.lancamento.carteira = null;
       }
 
-      this.lancamentoService[this.estadoSalvar](this.lancamento).subscribe(
-        (_lancamento: Lancamento) => {
-
-          this.toastr.success('Lançamento salvo com sucesso!', 'Sucesso');
-          this.router.navigate([`lancamentos/lista/${_lancamento.carteiraId}`]);
-        },
-        (error: any) => {
-          console.error(error);
-          //this.spinner.hide();
-          this.toastr.error('Erro ao atualizar o lançamento', 'Erro');
-        },
-        () => {
-          //this.spinner.hide();
-        }
-      ).add(() => {this.spinner.hide()});
-
+      if (this.lancamento.tipoDeMovimentacao == TipoDeMovimentacao.Venda) {
+        this.portifolioService.getPossuiQuantidadeAtivoByCarteiraId(this.lancamento.carteiraId, this.lancamento.ativoId, this.lancamento.quantidade, true).subscribe({
+          next: (possuiQuantidade: boolean) => {
+            if (possuiQuantidade == true) {
+              this.salvar();
+            } else {
+              this.toastr.error('Quantidade insuficiente para venda!', 'Erro');
+              this.spinner.hide();
+            }
+          },
+          error: (error: any) => {
+            this.toastr.error('Erro ao verificar a quantidade de ativo da carteira.', 'Erro!');
+            console.error(error)
+          }
+        });
+      } else {
+        this.salvar();
+      }
+    } else {
+      this.spinner.hide();
     }
-
   }
+
+  private salvar(): void {
+    this.lancamentoService[this.estadoSalvar](this.lancamento).subscribe(
+      (_lancamento: Lancamento) => {
+
+        this.toastr.success('Lançamento salvo com sucesso!', 'Sucesso');
+        this.router.navigate([`lancamentos/lista/${_lancamento.carteiraId}`]);
+      },
+      (error: any) => {
+        console.error(error);
+        //this.spinner.hide();
+        this.toastr.error('Erro ao atualizar o lançamento', 'Erro');
+      },
+      () => {
+        //this.spinner.hide();
+      }
+    ).add(() => {this.spinner.hide()});
+  }
+
 
 }

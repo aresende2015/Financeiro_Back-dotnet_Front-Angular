@@ -131,5 +131,10 @@ namespace InvestQ.Application.Services.Clientes
                 throw new Exception(ex.Message);
             }
         }
+
+        public bool GetPossuiQuantidadeDeAtivoByCarteiraId(Guid carteiraId, Guid ativoId, decimal quantidade)
+        {
+            return _portifolioRepo.GetPossuiQuantidadeDeAtivoByCarteiraId(carteiraId, ativoId, quantidade);            
+        }
     }
 }

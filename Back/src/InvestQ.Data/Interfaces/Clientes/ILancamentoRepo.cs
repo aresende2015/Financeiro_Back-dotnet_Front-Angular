@@ -18,6 +18,6 @@ namespace InvestQ.Data.Interfaces.Clientes
         Task<Lancamento> GetLancamentoByIdAsync(Guid id, bool includeCarteira, bool includeAtivo);
         DateTime GetDataLancamentoByCarteiraIdAtivoIdAsync(Guid carteiraId, Guid ativoId);
         bool GetPossuiLancamentoByCarteiraId(Guid carteiraId);
-
+        
     }
 }

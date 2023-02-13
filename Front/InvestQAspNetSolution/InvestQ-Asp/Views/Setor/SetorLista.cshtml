@@ -1,0 +1,50 @@
+﻿@model SetorListaViewModel
+
+@{
+    ViewData["Title"] = "SetorLista";
+}
+
+@{
+    ViewBag.Titulo = "Setores";
+    ViewBag.Subtitulo = "Tela de setores das ações";
+    ViewBag.Icon = "fas fa-landmark";
+    ViewBag.ActionTitulo = "SetorLista";
+    ViewBag.ActionNovo = "SetorCreate";
+}
+
+<partial name="_TituloPartial" />
+
+<div class="card rounder shadow-sm p-3">
+    
+    <table id="myTable" class="display">
+        <thead >
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Descrição
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Setores) {
+                <partial name="_SetorResumoPartial" for = "@item"/>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+                },
+                "paging": false,
+            });
+        });
+    </script>
+}

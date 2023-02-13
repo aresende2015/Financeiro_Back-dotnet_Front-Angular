@@ -8,6 +8,7 @@ namespace InvestQ.Application.Dtos.Ativos
         public Guid Id { get; set; }
         public DateTime DataCom { get; set; }
         public DateTime DataEx { get; set; }
+        public DateTime? DataPagamento { get; set; }
         public decimal Valor { get; set; }
         public TipoDeMovimentacao TipoDeMovimentacao { get; set; }
         public Guid AtivoId { get; set; }

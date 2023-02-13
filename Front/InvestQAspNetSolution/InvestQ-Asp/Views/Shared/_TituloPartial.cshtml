@@ -1,0 +1,23 @@
+﻿<div class="d-flex p-2 my-3 text-white bg-secondary rounded shadow-sm">
+    <div class="d-flex align-items-center me-auto">
+        <i class="@ViewBag.Icon"></i>
+        <div class="lh-1 p-3">
+            <h2 class="mb-0">@ViewBag.Titulo</h2>
+            <small>@ViewBag.Subtitulo</small>
+        </div>
+    </div>
+    <div class="p-4">
+        <a asp-action="@ViewBag.ActionTitulo" class="btn btn-outline-light">
+            Listar @ViewBag.Titulo
+        </a>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="p-4">
+            <a asp-action="@ViewBag.ActionNovo" class="d-flex btn btn-outline-primary">
+                <i class="fa fa-plus-circle my-1"></i>
+                <b class="ms-1 d-none d-sm-block">Novo</b>
+            </a>
+        </div>
+    }
+</div>

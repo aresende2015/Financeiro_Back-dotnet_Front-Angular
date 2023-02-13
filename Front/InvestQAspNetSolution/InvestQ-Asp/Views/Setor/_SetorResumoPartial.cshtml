@@ -1,0 +1,20 @@
+﻿@model SetorModel
+
+<tr>
+    <td>
+        @Model.Id
+    </td>
+    <td>
+        @Model.Descricao
+    </td>
+    <td>        
+        @if(User.IsInRole("Admin")) {
+            <a asp-action="SetorUpdate" class="btn btn-outline-primary btn-sm me-md-2" asp-route-id="@Model.Id">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a asp-controller="Setor" asp-action="SetorDelete" class="btn btn-outline-danger btn-sm" asp-route-id="@Model.Id">
+                <i class="fas fa-trash"></i>
+            </a>
+        }        
+    </td>
+</tr>

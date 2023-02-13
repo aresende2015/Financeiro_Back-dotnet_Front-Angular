@@ -27,4 +27,10 @@ export class PortifolioService {
               .pipe(take(1));
   }
 
+  public getPossuiQuantidadeAtivoByCarteiraId(carteiraId: Guid, ativoId: Guid, quantidade: number, possuiativobycarteira: boolean): Observable<any> {
+    return this.http
+              .get(`${this.baseURL}/${'possuiativobycarteira'}/${carteiraId}/${ativoId}/${quantidade}/${possuiativobycarteira}`)
+              .pipe(take(1));
+  }
+
 }

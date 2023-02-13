@@ -77,5 +77,13 @@ namespace InvestQ.Data.Repositories.Clientes
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public bool GetPossuiQuantidadeDeAtivoByCarteiraId(Guid carteiraId, Guid ativoId, decimal quantidade)
+        {
+            bool retorno = _context.Portifolios
+                                    .Where(p => p.CarteiraId == carteiraId && p.AtivoId == ativoId && p.Quantidade >= quantidade)
+                                    .Count() > 0;
+            return retorno;
+        }
     }
 }

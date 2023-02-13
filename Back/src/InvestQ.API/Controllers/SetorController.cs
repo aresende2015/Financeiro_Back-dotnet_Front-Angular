@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using InvestQ.API.Utils;
+using InvestQ.Application.Dtos;
 using InvestQ.Application.Dtos.Acoes;
 using InvestQ.Application.Interfaces.Acoes;
 using Microsoft.AspNetCore.Authorization;
@@ -56,6 +58,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> Post(SetorDto model) 
         {
             try
@@ -73,6 +76,7 @@ namespace InvestQ.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> Put(Guid id, SetorDto model)
         {
             try
@@ -89,7 +93,26 @@ namespace InvestQ.API.Controllers
             }
         }
 
+        [HttpPut]
+        [Authorize(Roles = Role.Admin)]
+        public async Task<IActionResult> Put(SetorDto model)
+        {
+            try
+            {
+                 var setor = await _setorService.AtualizarSetor(model.Id, model);
+                 if (setor == null) return NoContent();
+
+                 return Ok(setor);
+            }
+            catch (Exception ex)
+            {                
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Erro ao tentar atualizar um Setor com id: ${model.Id}. Erro: {ex.Message}");
+            }
+        }
+
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
@@ -101,7 +124,16 @@ namespace InvestQ.API.Controllers
 
                 if(await _setorService.DeletarSetor(id))
                 {
-                    return Ok(new { message = "Deletado"});
+                    // var setores = await _setorService.GetAllSetoresAsync(true);
+
+                    // if (setores == null) return NoContent();
+
+                    // return Ok(setores);
+                    var mensagemDto = new MensagemDto();
+
+                    mensagemDto.Descricao = "Deletato";
+                    
+                    return Ok(mensagemDto);
                 }
                 else
                 {

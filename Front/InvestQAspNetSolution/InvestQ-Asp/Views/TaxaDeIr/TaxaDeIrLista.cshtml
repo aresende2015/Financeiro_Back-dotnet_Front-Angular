@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TaxaDeIrModel>
+
+@{
+    ViewData["Title"] = "TaxaDeIrLista";
+}
+
+@{
+    ViewBag.Titulo = "Taxas de IR";
+    ViewBag.Subtitulo = "Tela de Taxas de IR dos ativos";
+    ViewBag.Icon = "fas fa-landmark";
+    ViewBag.ActionTitulo = "TaxaDeIrLista";
+    ViewBag.ActionNovo = "TaxaDeIrCreate";
+}
+
+<partial name="_TituloPartial" />
+
+<div class="card rounder shadow-sm p-3">
+
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Tipo de Ativo
+                </th>
+                <th>
+                    Descrição
+                </th>
+                <th>
+                    Início
+                </th>
+                <th>
+                    Fim
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <partial name="_TaxaDeIrResumoPartial" for="@item" />
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json"
+                }
+            });
+        });
+    </script>
+}

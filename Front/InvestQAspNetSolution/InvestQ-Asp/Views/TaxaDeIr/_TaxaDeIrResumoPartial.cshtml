@@ -1,0 +1,30 @@
+﻿@model TaxaDeIrModel
+
+<tr>
+    <td>
+        @Model.Id
+    </td>
+    <td>
+        @Model.TipoDeAtivo.ToString()
+    </td>
+    <td>
+        @Model.Percentual
+    </td>
+    <td>
+        @Model.DataInicio
+    </td>
+    <td>
+        @Model.DataFim
+    </td>
+    <td>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="TaxaDeIrUpdate" class="btn btn-outline-primary btn-sm me-md-2" asp-route-id="@Model.Id">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a asp-controller="TaxaDeIr" asp-action="TaxaDeIrDelete" class="btn btn-outline-danger btn-sm" asp-route-id="@Model.Id">
+                <i class="fas fa-trash"></i>
+            </a>
+        }
+    </td>
+</tr>

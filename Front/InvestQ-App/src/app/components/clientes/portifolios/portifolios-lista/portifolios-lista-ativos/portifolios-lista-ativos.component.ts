@@ -207,6 +207,27 @@ export class PortifoliosListaAtivosComponent implements OnInit {
 
     this.spinner.show();
 
+    if (this.lancamento.tipoDeMovimentacao == TipoDeMovimentacao.Venda) {
+      this.portifolioService.getPossuiQuantidadeAtivoByCarteiraId(this.lancamento.carteiraId, this.lancamento.ativoId, this.lancamento.quantidade, true).subscribe({
+        next: (possuiQuantidade: boolean) => {
+          if (possuiQuantidade == true) {
+            this.salvar();
+          } else {
+            this.toastr.error('Quantidade insuficiente para venda!', 'Erro');
+            this.spinner.hide();
+          }
+        },
+        error: (error: any) => {
+          this.toastr.error('Erro ao verificar a quantidade de ativo da carteira.', 'Erro!');
+          console.error(error)
+        }
+      });
+    } else {
+      this.salvar();
+    }
+  }
+
+  private salvar(): void {
     this.lancamentoService.post(this.lancamento).subscribe(
       (_lancamento: Lancamento) => {
           this.toastr.success('Lançamento salvo com sucesso!', 'Sucesso');

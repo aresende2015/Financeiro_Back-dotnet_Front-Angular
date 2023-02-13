@@ -16,6 +16,7 @@ namespace InvestQ.Domain.Entities.Ativos
         public Provento(Guid id, 
                         DateTime dataCom,
                         DateTime dataEx,
+                        DateTime dataPagamento,
                         Decimal valor,
                         Guid ativoId,
                         TipoDeMovimentacao tipoDeMovimentacao)
@@ -23,6 +24,7 @@ namespace InvestQ.Domain.Entities.Ativos
             Id = id;
             DataCom = dataCom;
             DataEx = dataEx;
+            DataPagamento = dataPagamento;
             Valor = valor;
             AtivoId = ativoId;
             TipoDeMovimentacao = tipoDeMovimentacao;
@@ -44,6 +46,7 @@ namespace InvestQ.Domain.Entities.Ativos
 
         public DateTime DataCom { get; set; }
         public DateTime DataEx { get; set; }
+        public DateTime? DataPagamento { get; set; }
         public decimal Valor { get; set; }
         public TipoDeMovimentacao TipoDeMovimentacao { get; set; }
         public Guid AtivoId { get; set; }

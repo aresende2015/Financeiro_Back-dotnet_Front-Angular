@@ -1,0 +1,20 @@
+﻿<div class="d-flex">
+    <div class="flex-fill pe-3">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Filtro: </div>
+            </div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="@ViewBag.Placeholder">
+        </div>
+    </div>
+    @if (User.IsInRole("Admin")) {
+        <div>
+            <a asp-action="@ViewBag.ActionFiltrar" class="d-flex btn btn-outline-primary">
+                <i class="fa fa-plus-circle my-1"></i>
+                <b class="ms-1 d-none d-sm-block">Novo</b>
+            </a>
+        </div>
+    }    
+</div>

@@ -61,6 +61,14 @@ namespace InvestQ.API.Controllers
                             $"Erro ao tentar recuperar todos os Lançamento de uma carteira. Erro: {ex.Message}");
             }
         }
+
+        [HttpGet("possuiativobycarteira/{carteiraId}/{ativoId}/{quantidade}/{possuiativobycarteira}")]
+        public bool Get(Guid carteiraId, Guid ativoId, decimal quantidade, bool possuiativobycarteira) 
+        {
+            possuiativobycarteira = _portifolioService.GetPossuiQuantidadeDeAtivoByCarteiraId(carteiraId, ativoId, quantidade);
+            
+            return possuiativobycarteira;
+        }
         
     }
 }
